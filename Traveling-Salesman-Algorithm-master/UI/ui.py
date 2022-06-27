@@ -14,7 +14,7 @@ class Button:
         self.temp = color
         self.color = color
         self.borderColor = borderColor
-        self.font = 'freesansbold.ttf'
+        self.font = 'cascadiacoderegular'
         self.fontSize = 25
         self.textColor = (255, 255, 255)
         self.state = False
@@ -39,7 +39,8 @@ class Button:
     def Render(self, screen, mouseClicked, checker=True):
         if checker:
             self.HandleMouse(mouseClicked)
-        font = pygame.font.Font(self.font, self.fontSize)
+        # font = pygame.font.Font(self.font, self.fontSize)
+        font = pygame.font.SysFont(self.font, self.fontSize)
         text = font.render(self.text, True, self.textColor)
         textRect = text.get_rect()
         textRect.center = (self.position[0]+self.w//2, self.position[1]+self.h//2)
@@ -106,12 +107,15 @@ class TextUI:
     def __init__(self,text, position, fontColor, anchor='center'):
         self.position = position
         self.text = text
-        self.font = 'freesansbold.ttf'
+        # self.font = 'freesansbold.ttf'
+        self.font = 'cascadiacoderegular'
         self.anchor = anchor
         self.fontSize = 18
         self.fontColor = fontColor
+
     def Render(self, screen):
-        font = pygame.font.Font(self.font, self.fontSize)
+        font = pygame.font.SysFont(self.font, self.fontSize)
+        # font = pygame.font.Font(self.font, self.fontSize)
         text = font.render(self.text, True, self.fontColor)
         textRect = text.get_rect()
         setattr(textRect, self.anchor, self.position)
@@ -124,7 +128,7 @@ class DigitInput:
         self.text = str(startingValue)
         self.fontColor = (255, 255, 255)
         self.fontSize = 18
-        self.font = 'freesansbold.ttf'
+        self.font = 'cascadiacoderegular'
         self.w = w
         self.h = h
         self.color = color
@@ -169,7 +173,8 @@ class DigitInput:
     def Render(self, screen, val, backspace, pressed):
         self.updateText(val, pressed)
         self.Check(backspace, val)
-        font = pygame.font.Font(self.font, self.fontSize)
+        font = pygame.font.SysFont(self.font, self.fontSize)
+        # font = pygame.font.Font(self.font, self.fontSize)
         text = font.render(str(self.value), True, self.fontColor)
         textRect = text.get_rect()
         textRect.center = (self.position[0]+self.w//2, self.position[1]+self.h//2)
@@ -220,9 +225,6 @@ class Slider:
         pygame.draw.circle(screen, (130, 213, 151), (x, self.y + (self.rectradius//2)), self.rectradius)
         return self.value
 
-
-
-## Don't Mind the code below it's an absolute mess 🍝
 class DropDownButton:
     def __init__(self, text="Select", position = (width-230, 400) , w = 100, h= 50, children_size=2, border=0, color = (0, 0, 0), borderColor = (0, 0, 0)):
         self.text = text
@@ -238,7 +240,7 @@ class DropDownButton:
             button = Button("button " +str(i), (position[0], position[1] + h + h*i+  2), w, h, border, color, borderColor)
             self.childs.append(button)
         self.borderColor = borderColor
-        self.font = 'freesansbold.ttf'
+        self.font = 'cascadiacoderegular'
         self.fontSize = 25
         self.textColor = (255, 255, 255)
         self.state = False
@@ -303,7 +305,8 @@ class DropDownButton:
     def Render(self, screen, mouseClicked, checker = True):
         if checker:
             self.HandleMouse(mouseClicked)
-        font = pygame.font.Font(self.font, self.fontSize)
+        font = pygame.font.SysFont(self.font, self.fontSize)
+        # font = pygame.font.Font(self.font, self.fontSize)
         text = font.render(self.text, True, self.textColor)
         textRect = text.get_rect()
         textRect.center = (self.position[0]+self.w//2, self.position[1]+self.h//2)
