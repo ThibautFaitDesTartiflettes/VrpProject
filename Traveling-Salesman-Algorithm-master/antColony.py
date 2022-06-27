@@ -4,14 +4,12 @@ from utils import translateValue
 pygame.font.init()
 textColor   = (0, 0, 0)
 # textFont    = pg.font.Font("freesansbold.ttf", size)
-textFont    = pygame.font.SysFont("Arial", 20)
+textFont    = pygame.font.SysFont("cascadiacoderegular", 20)
 
 class AntColony(object):
     def __init__(self, size=5, elitist_weight=1.0, minFactor=0.001, alpha=1.0, beta=3.0,
                  rho=0.1, phe_deposit_weight=1.0, pheromone=1.0, max_iterations=100, nodes=None, labels=None):
         self.size = size
-        self.elitist_weight = elitist_weight
-        self.minFactor = minFactor
         self.alpha = alpha
         self.rho = rho
         self.phe_deposit_weight = phe_deposit_weight
