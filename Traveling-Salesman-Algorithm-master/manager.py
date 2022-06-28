@@ -9,8 +9,8 @@ from ant import *
 
 offset          = 100
 width, height   = 1920, 1080
-populationSize  = 300
-n = 150
+populationSize  = 2000
+n = 1000
 colony_size = 10
 iterations = 250
 pygame.font.init()
