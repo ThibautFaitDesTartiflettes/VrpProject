@@ -10,12 +10,12 @@ class Edge:
         self.pheromone = pheromone
 
 class Ant:
-    def __init__(self, edges, alpha, beta, n_nodes):
+    def __init__(self, graph, alpha, beta, n_nodes):
         """
         alpha -> parameter used to control the importance of the pheromone trail
         beta  -> parameter used to control the heuristic information during selection
         """
-        self.edges = edges
+        self.graph = graph
         self.tour = None
         self.alpha = alpha
         self.beta = beta
@@ -38,16 +38,16 @@ class Ant:
         states = [node for node in range(self.n_nodes) if node not in self.tour]
         heuristic_value = 0
         for new_state in states:
-            heuristic_value += self.edges[self.tour[-1]][new_state].heuristic
+            heuristic_value += self.graph.Edges[self.tour[-1]][new_state].heuristic
         for new_state in states:
-            A = math.pow(self.edges[self.tour[-1]][new_state].pheromone, self.alpha)
-            B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].heuristic), self.beta)
+            A = math.pow(self.graph.Edges[self.tour[-1]][new_state].pheromone, self.alpha)
+            B = math.pow((heuristic_value/self.graph.Edges[self.tour[-1]][new_state].heuristic), self.beta)
             roulette_wheel += A * B
         random_value = random.uniform(0, roulette_wheel)
         wheel_position = 0
         for new_state in states:
-            A = math.pow(self.edges[self.tour[-1]][new_state].pheromone, self.alpha)
-            B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].heuristic), self.beta)
+            A = math.pow(self.graph.Edges[self.tour[-1]][new_state].pheromone, self.alpha)
+            B = math.pow((heuristic_value/self.graph.Edges[self.tour[-1]][new_state].heuristic), self.beta)
             wheel_position += A * B
             if wheel_position >= random_value:
                 return new_state
@@ -61,5 +61,5 @@ class Ant:
     def CalculateDistance(self):
         self.distance = 0
         for i in range(self.n_nodes):
-            self.distance += self.edges[self.tour[i]][self.tour[(i+1)%self.n_nodes]].heuristic
+            self.distance += self.graph.Edges[self.tour[i]][self.tour[(i+1)%self.n_nodes]].heuristic
         return self.distance

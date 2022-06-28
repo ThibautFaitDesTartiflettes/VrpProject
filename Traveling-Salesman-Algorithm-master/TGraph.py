@@ -4,18 +4,18 @@ import copy
 from collections.abc import Sequence
 import math
 import sys
-from TEdge import Edge
-from TVertex import Vertex
+from TEdge import *
+from TVertex import *
 
 class IdxVertex(Vertex):
     idx : int = -1
 
     def __init__(self,_idx : int, pt : Vertex):
-        Vertex.__init__(self,pt.Label,pt.X,pt.Y)
+        Vertex.__init__(self,pt.x,pt.y,pt.label,pt.alpha,pt.radius)
         self.idx = _idx
 
     def __eq__(self, o):
-        return self.X == o.X and self.Y == o.Y and self.Label == o.Label
+        return self.x == o.x and self.y == o.y and self.label == o.label
 
 
 
@@ -24,15 +24,16 @@ class Graph(Sequence):
     Vertex = []
     Edges = []
 
+
     def __init__(self,L:int = 0):
         self.L = L
         super().__init__()
 
     def addVertex(self,pt : Vertex):
         self.Vertex.append(IdxVertex(len(self.Vertex),pt))
-        self.Edges.append( [Edge(0) for i in range(len(self.Edges))])
+        self.Edges.append( [Edge() for i in range(len(self.Edges))])
         for i in range(len(self.Edges)):
-            self.Edges[i].append(Edge(0))
+            self.Edges[i].append(Edge())
 
     def removeVertex(self ,pt : Vertex):
         for idx_pt in range(len(self.Vertex)) :
@@ -83,3 +84,15 @@ class Graph(Sequence):
                 continue
             deg+=1
         return deg
+
+    def setVertex(self, pts):
+        self.Edges.clear()
+        self.Vertex.clear()
+        for pt in pts:
+            self.addVertex(pt)
+
+    def getPtIndex(self, pt):
+        for iv in self.Vertex:
+            if iv == pt:
+                return iv.idx
+
