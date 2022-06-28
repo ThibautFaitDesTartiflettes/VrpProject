@@ -18,6 +18,7 @@ pygame.font.init()
 class Manager(object):
     size            = (width, height)
     fps             = 60
+    fpsOpti         = 60
     screen          = pygame.display.set_mode(size)
     clock           = pygame.time.Clock()
     scaler          = 1
@@ -37,7 +38,7 @@ class Manager(object):
 
     genetic         = Genetic([sample(list(range(n)), n) for i in range(populationSize)], populationSize)
 
-    PossibleCombinations = Factorial(n_points)
+    PossibleCombinations = FactorialOpti(n_points)
     # print("possible combinations : {}".format(Factorial(n_points)))
 
     Order           = [i for i in range(n_points)]
@@ -63,7 +64,10 @@ class Manager(object):
                          nodes=self.Points.copy(), alpha=1, beta=3, rho=0.1, pheromone=1, phe_deposit_weight=1,edges=edges)
     
     def SetFps(self):
-        return self.clock.tick(self.fps)/1000.0
+        if (n > 100):
+            return self.clock.tick(self.fps)/1000.0
+        else:
+            return self.clock.tick(self.fpsOpti)/1000.0
 
     def UpdateCaption(self):
         frameRate = int(self.clock.get_fps())
@@ -107,7 +111,8 @@ class Manager(object):
 
     def AntColonyOptimization(self):
         self.antColony.Simulate()
-        self.antColony.Draw(self)
+        if (n <= 100):
+            self.antColony.Draw(self)
         self.recordDistance = self.antColony.best_distance
 
     def RandomPoints(self):
@@ -120,32 +125,43 @@ class Manager(object):
     def Percentage(self):
         percent = (self.counter/iterations) * 100
         percentTime = (self.timePassed/self.timeMax) * 100
-        textFont    = pygame.font.SysFont("cascadiacoderegular", 20)
+        if (n<=100):
+            textFont    = pygame.font.SysFont("cascadiacoderegular", 20)
+        else:
+            textFont    = pygame.font.SysFont("cascadiacoderegular", 50)
+
         textSurface = textFont.render("iteration : "+str(round(percent, 2))+"%", False, self.White)
         textSurface2 = textFont.render("time : "+str(round(percentTime, 2))+"%", False, self.White)
-        self.screen.blit(textSurface, (width//2, 25))
-        self.screen.blit(textSurface2, (width//2, 50))
 
-    def ShowText(self, selectedIndex, started = True, time = 0):
+        if (n<=100):
+            self.screen.blit(textSurface, (width//2, 25))
+            self.screen.blit(textSurface2, (width//2, 50))
+        else:
+            self.screen.blit(textSurface, (width//2-200, 30))
+            self.screen.blit(textSurface2, (width//2-200, 70))
+
+    def ShowText(self, selectedIndex, started = True, time = 0, iterTime = 0):
         textColor   = (255, 255, 255)
         textFont    = pygame.font.SysFont("cascadiacoderegular", 20)
         textFont2    = pygame.font.SysFont("cascadiacoderegular", 40)
-
-        h = round(time * 24)
-        m = round(((time * 24)%1)*60)
 
         textSurface1 = textFont.render("Best distance : " + str(round(self.recordDistance,2)), False, textColor)
         textSurface2 = textFont.render(self.algorithms[selectedIndex], False, textColor)
         textSurface_ale =  textFont.render('time = '+str(round(self.timePassed,2))+' s', False, textColor)
         textSurface_count =  textFont.render('iteration = '+str(self.counter), False, textColor)
-        textSurface_count =  textFont.render('time : '+str(h)+':'+str(m), False, textColor)
-        
-
-
+        textSurface_time =  textFont.render('time : '+GetTimeStr(time), False, textColor)
+        textSurface_iterTime =  textFont.render('iteration time : '+str(round(iterTime,3)), False, textColor)
+    
         self.screen.blit(textSurface1, (20, 50))
         self.screen.blit(textSurface2, (20, 25))
         self.screen.blit(textSurface_ale, (20, 75))
-        self.screen.blit(textSurface_count, (width-270,50))
+        self.screen.blit(textSurface_count, (20,100))
+        self.screen.blit(textSurface_iterTime, (20, 125))
+        self.screen.blit(textSurface_time, (width-270,50))
+
+        if (n>100):
+            textSurface_result = textFont2.render(" --> ".join([str(i) for i in self.OptimalRoutes]), False, textColor)
+            self.screen.blit(textSurface_result,( 0,height//2 -20))
 
     def DrawShortestPath(self):
         if len(self.OptimalRoutes) > 0:
@@ -177,7 +193,7 @@ class Manager(object):
 
     def ResetGraph(self):
         temp = self.Points.copy()
-        self.__init__(temp)
+        #self.__init__(temp)
         self.OptimalRoutes = self.Points.copy()
         self.recordDistance = SumDistance(self.Points)
         self.ResetAntColony()

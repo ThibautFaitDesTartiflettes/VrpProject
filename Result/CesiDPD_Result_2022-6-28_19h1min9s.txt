@@ -1,0 +1,116 @@
+calcul realized at  : 2022-06-28 19:01:09.139007
+done in             : 32.62597465515137s
+iteration           : 250
+iteration time      : 0.13050389862060546
+n_points            : 15
+
+
+
+Best distance : 5924.703428387643
+
+path : 
+Vertex : 0  (352, 310) at 21:31
+
+		Edge betwen  (352, 310)  to  (443, 463)
+		heuristic : 270.78
+		pheromone : 16.89
+		duration  :(0.04cos(0.85*2*Pi))/6(0.27*cos(0.85*3*Pi))/6(0.5*cos(0.85*5*Pi))/6(0.44*cos(0.85*6*Pi))/6 = 0.52  =  13:32
+
+Vertex : 1  (443, 463) at 1 days 9:3
+
+		Edge betwen  (443, 463)  to  (699, 756)
+		heuristic : 613.62
+		pheromone : 24.44
+		duration  :(0.02cos(1.38*2*Pi))/6(-0.42*cos(1.38*3*Pi))/6(0.5*cos(1.38*5*Pi))/6(0.46*cos(1.38*6*Pi))/6 = 0.64  =  15:16
+
+Vertex : 2  (699, 756) at 2 days 18:47
+
+		Edge betwen  (699, 756)  to  (1243, 572)
+		heuristic : 1049.77
+		pheromone : 17.33
+		duration  :(0.04cos(1.74*2*Pi))/6(0.1*cos(1.74*3*Pi))/6(0.5*cos(1.74*5*Pi))/6(0.41*cos(1.74*6*Pi))/6 = 0.47  =  11:17
+
+Vertex : 3  (1243, 572) at 2 days 3:30
+
+		Edge betwen  (1243, 572)  to  (1193, 630)
+		heuristic : 1201.96
+		pheromone : 14.45
+		duration  :(0.09cos(2.1*2*Pi))/6(-0.19*cos(2.1*3*Pi))/6(0.5*cos(2.1*5*Pi))/6(-0.45*cos(2.1*6*Pi))/6 = 0.52  =  12:30
+
+Vertex : 4  (1193, 630) at 3 days 15:60
+
+		Edge betwen  (1193, 630)  to  (772, 324)
+		heuristic : 1402.83
+		pheromone : 16.05
+		duration  :(0.05cos(2.62*2*Pi))/6(-0.08*cos(2.62*3*Pi))/6(0.5*cos(2.62*5*Pi))/6(0.27*cos(2.62*6*Pi))/6 = 0.44  =  11:33
+
+Vertex : 5  (772, 324) at 3 days 2:33
+
+		Edge betwen  (772, 324)  to  (696, 897)
+		heuristic : 997.46
+		pheromone : 8.22
+		duration  :(0.04cos(3.06*2*Pi))/6(-0.48*cos(3.06*3*Pi))/6(0.5*cos(3.06*5*Pi))/6(0.05*cos(3.06*6*Pi))/6 = 0.5  =  12:4
+
+Vertex : 6  (696, 897) at 4 days 17:32
+
+		Edge betwen  (696, 897)  to  (616, 151)
+		heuristic : 559.72
+		pheromone : 5.0
+		duration  :(0.09cos(3.69*2*Pi))/6(-0.28*cos(3.69*3*Pi))/6(0.5*cos(3.69*5*Pi))/6(0.09*cos(3.69*6*Pi))/6 = 0.39  =  9:15
+
+Vertex : 7  (616, 151) at 4 days 4:7
+
+		Edge betwen  (616, 151)  to  (1077, 152)
+		heuristic : 826.78
+		pheromone : 14.77
+		duration  :(0.03cos(4.17*2*Pi))/6(0.01*cos(4.17*3*Pi))/6(0.5*cos(4.17*5*Pi))/6(0.26*cos(4.17*6*Pi))/6 = 0.42  =  10:0
+
+Vertex : 8  (1077, 152) at 5 days 14:8
+
+		Edge betwen  (1077, 152)  to  (78, 762)
+		heuristic : 171.03
+		pheromone : 12.26
+		duration  :(0.01cos(4.59*2*Pi))/6(0.46*cos(4.59*3*Pi))/6(0.5*cos(4.59*5*Pi))/6(0.16*cos(4.59*6*Pi))/6 = 0.56  =  14:34
+
+Vertex : 9  (78, 762) at 5 days 4:41
+
+		Edge betwen  (78, 762)  to  (108, 977)
+		heuristic : 258.85
+		pheromone : 13.84
+		duration  :(0.06cos(5.15*2*Pi))/6(-0.16*cos(5.15*3*Pi))/6(0.5*cos(5.15*5*Pi))/6(-0.44*cos(5.15*6*Pi))/6 = 0.53  =  13:40
+
+Vertex : 10  (108, 977) at 6 days 14:53
+
+		Edge betwen  (108, 977)  to  (1083, 873)
+		heuristic : 197.04
+		pheromone : 7.87
+		duration  :(0.02cos(5.58*2*Pi))/6(-0.35*cos(5.58*3*Pi))/6(0.5*cos(5.58*5*Pi))/6(0.18*cos(5.58*6*Pi))/6 = 0.48  =  11:26
+
+Vertex : 11  (1083, 873) at 6 days 5:33
+
+		Edge betwen  (1083, 873)  to  (528, 923)
+		heuristic : 325.85
+		pheromone : 6.23
+		duration  :(0.03cos(6.19*2*Pi))/6(-0.11*cos(6.19*3*Pi))/6(0.5*cos(6.19*5*Pi))/6(-0.18*cos(6.19*6*Pi))/6 = 0.47  =  11:24
+
+Vertex : 12  (528, 923) at 7 days 16:57
+
+		Edge betwen  (528, 923)  to  (714, 325)
+		heuristic : 114.93
+		pheromone : 5.55
+		duration  :(0.03cos(6.66*2*Pi))/6(-0.24*cos(6.66*3*Pi))/6(0.5*cos(6.66*5*Pi))/6(0.12*cos(6.66*6*Pi))/6 = 0.41  =  10:45
+
+Vertex : 13  (714, 325) at 7 days 2:42
+
+		Edge betwen  (714, 325)  to  (323, 226)
+		heuristic : 314.84
+		pheromone : 15.73
+		duration  :(0.09cos(7.07*2*Pi))/6(-0.4*cos(7.07*3*Pi))/6(0.5*cos(7.07*5*Pi))/6(0.01*cos(7.07*6*Pi))/6 = 0.52  =  12:22
+
+Vertex : 14  (323, 226) at 8 days 17:31
+
+		Edge betwen  (352, 310)  to  (323, 226)
+		heuristic : 456.16
+		pheromone : 9.89
+		duration  :(0.06cos(7.69*2*Pi))/6(0.33*cos(7.69*3*Pi))/6(0.5*cos(7.69*5*Pi))/6(-0.15*cos(7.69*6*Pi))/6 = 0.5  =  12:53
+

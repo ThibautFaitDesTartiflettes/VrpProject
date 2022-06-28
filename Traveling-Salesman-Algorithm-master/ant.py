@@ -18,10 +18,10 @@ class Edge:
 
     def CalcDist(self , time):
         v = 0
-        v+=((self.coef1 * math.cos(time*2 *math.pi))/(2))
-        v+=((self.coef2 * math.cos(time*3 * math.pi)+1)/(2))
-        v+=((self.coef3 * math.cos(time*4 * math.pi)+1)/(2))
-        v+=((self.coef4 * math.cos(time*4 * math.pi)+1)/(2))
+        v+=((self.coef1 * math.cos(time*2 *math.pi))/(6))
+        v+=((self.coef2 * math.cos(time*3 * math.pi)+1)/(6))
+        v+=((self.coef3 * math.cos(time*4 * math.pi)+1)/(6))
+        v+=((self.coef4 * math.cos(time*5 * math.pi)+1)/(6))
         return v
 
 
@@ -79,7 +79,8 @@ class Ant:
         while len(self.tour) < self.n_nodes:
             n = self.NodeSelection()
             self.tour.append(n)
-            self.time += (self.edges[self.tour[len(self.tour)-1]][self.tour[len(self.tour)-2]]).CalcDist(self.time)%1
+            self.time += (self.edges[self.tour[len(self.tour)-1]][self.tour[len(self.tour)-2]]).CalcDist(self.time%1)
+            self.time = self.time
         return self.tour
 
     def CalculateDistance(self):

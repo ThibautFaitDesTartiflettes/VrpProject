@@ -5,6 +5,12 @@ from manager import *
 from random import randint
 from UI.setup import *
 from utils import SumDistance
+from ant import *
+import sys
+import datetime
+
+
+sys.setrecursionlimit(8192)
 
 
 pygame.init()
@@ -23,7 +29,8 @@ PauseButton.state = pause
 ResetButton.state = reset
 RandomButton.state = GenerateToggle
 timeLastCheck = time.time()
-
+timeIteration = []
+fileWrited = False
 showUI = True
 run = True
 selectedIndex = 0
@@ -63,29 +70,44 @@ while run:
     if selectedIndex == 0:
         if (allowAlgoNextStep):
             manager.BruteForce()
-        manager.DrawShortestPath()
+        if (n <= 100):
+            manager.DrawShortestPath()
     elif selectedIndex == 1:
         if (allowAlgoNextStep):
             manager.GeneticAlgorithm()
-        manager.DrawShortestPath()
+        
+        if (n<=100):
+            manager.DrawShortestPath()
     else:
         if (allowAlgoNextStep):
             manager.AntColonyOptimization()
-            manager.antColony.Draw(manager)
-        else :
+            if (n <= 100):
+                manager.antColony.Draw(manager)
+        elif(n<=100) :
             manager.DrawShortestPath()
     
-    # Updating telemetry
+# Updating telemetry
     if (allowAlgoNextStep):
         manager.counter+=1
-        manager.timePassed+=time.time() - timeLastCheck
+        t = time.time() - timeLastCheck
+        manager.timePassed+=t
+        timeIteration.append(t)
     timeLastCheck = time.time()
 
-    manager.DrawPoints()
-    manager.ShowText(selectedIndex, started,slider.value/1000)
+#Saving result
+    if (manager.counter >= iterations and not(fileWrited)):
+        WriteFile(manager,selectedIndex,slider.value/1000,timeIteration)
+        fileWrited = True
+
+    if (n <= 100):
+        manager.DrawPoints()
+    if (len(timeIteration)==0):
+        manager.ShowText(selectedIndex, started,slider.value/1000,float("nan"))
+    else:
+        manager.ShowText(selectedIndex, started,slider.value/1000,sum(timeIteration)/len(timeIteration))
     manager.Percentage()
 
-    # UI
+# UI
     panel.Render(manager.screen)
     AlgorithmChoice.Render(manager.screen, rightMouseClicked)
     if pause != PauseButton.state:
@@ -99,10 +121,14 @@ while run:
     pause = PauseButton.state
     reset = ResetButton.state
 
+#RESET Button
     if reset == True:
         reset = False
         ResetButton.state = False
+        fileWrited = False
+        timeIteration = []
         manager.ResetGraph()
+
 
     GenerateToggle = RandomButton.state
     if GenerateToggle == True:
@@ -127,4 +153,9 @@ while run:
 
     pygame.display.flip()
     rightMouseClicked = False
+
+#save file
+WriteFile(manager,selectedIndex,slider.value/1000,timeIteration)
+fileWrited = True
+
 pygame.quit()
