@@ -82,10 +82,8 @@ while run:
     timeLastCheck = time.time()
 
     manager.DrawPoints()
-    manager.ShowText(selectedIndex, started)
+    manager.ShowText(selectedIndex, started,slider.value/1000)
     manager.Percentage()
-
-
 
     # UI
     panel.Render(manager.screen)
@@ -96,6 +94,7 @@ while run:
     PauseButton.Render(manager.screen, rightMouseClicked)
     ResetButton.Render(manager.screen, rightMouseClicked)
     RandomButton.Render(manager.screen, rightMouseClicked)
+    slider.Render(manager.screen)
 
     pause = PauseButton.state
     reset = ResetButton.state

@@ -10,7 +10,7 @@ from ant import *
 offset          = 100
 width, height   = 1920, 1080
 populationSize  = 300
-n = 150
+n = 15
 colony_size = 10
 iterations = 250
 pygame.font.init()
@@ -58,8 +58,9 @@ class Manager(object):
 
     def ResetAntColony(self):
         self.recordDistance  = SumDistance(self.Points)
+        edges = self.antColony.edges
         self.antColony = AntColony( size=colony_size, max_iterations = iterations,
-                         nodes=self.Points.copy(), alpha=1, beta=3, rho=0.1, pheromone=1, phe_deposit_weight=1)
+                         nodes=self.Points.copy(), alpha=1, beta=3, rho=0.1, pheromone=1, phe_deposit_weight=1,edges=edges)
     
     def SetFps(self):
         return self.clock.tick(self.fps)/1000.0
@@ -125,20 +126,26 @@ class Manager(object):
         self.screen.blit(textSurface, (width//2, 25))
         self.screen.blit(textSurface2, (width//2, 50))
 
-    def ShowText(self, selectedIndex, started = True):
+    def ShowText(self, selectedIndex, started = True, time = 0):
         textColor   = (255, 255, 255)
         textFont    = pygame.font.SysFont("cascadiacoderegular", 20)
         textFont2    = pygame.font.SysFont("cascadiacoderegular", 40)
+
+        h = round(time * 24)
+        m = round(((time * 24)%1)*60)
 
         textSurface1 = textFont.render("Best distance : " + str(round(self.recordDistance,2)), False, textColor)
         textSurface2 = textFont.render(self.algorithms[selectedIndex], False, textColor)
         textSurface_ale =  textFont.render('time = '+str(round(self.timePassed,2))+' s', False, textColor)
         textSurface_count =  textFont.render('iteration = '+str(self.counter), False, textColor)
+        textSurface_count =  textFont.render('time : '+str(h)+':'+str(m), False, textColor)
+        
+
 
         self.screen.blit(textSurface1, (20, 50))
         self.screen.blit(textSurface2, (20, 25))
         self.screen.blit(textSurface_ale, (20, 75))
-        self.screen.blit(textSurface_count, (20,100))
+        self.screen.blit(textSurface_count, (width-270,50))
 
     def DrawShortestPath(self):
         if len(self.OptimalRoutes) > 0:

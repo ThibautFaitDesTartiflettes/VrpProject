@@ -8,7 +8,7 @@ textFont    = pygame.font.SysFont("cascadiacoderegular", 20)
 
 class AntColony(object):
     def __init__(self, size=5, elitist_weight=1.0, minFactor=0.001, alpha=1.0, beta=3.0,
-                 rho=0.1, phe_deposit_weight=1.0, pheromone=1.0, max_iterations=100, nodes=None, labels=None):
+                 rho=0.1, phe_deposit_weight=1.0, pheromone=1.0, max_iterations=100, nodes=None, labels=None, time = 0, edges = None):
         self.size = size
         self.alpha = alpha
         self.rho = rho
@@ -16,15 +16,22 @@ class AntColony(object):
         self.max_iterations = max_iterations
         self.n_nodes = len(nodes)
         self.nodes = nodes
-        self.edges = [[None for j in range(self.n_nodes)] for i in range(self.n_nodes)]
-        for x in range(self.n_nodes):
-            for y in range(self.n_nodes):
-                heuristic = math.sqrt(
-                    math.pow(self.nodes[x].x-self.nodes[y].x, 2) +
-                    math.pow(self.nodes[x].y-self.nodes[y].y, 2)
-                )
-                self.edges[x][y] = self.edges[y][x] = Edge(x, y, heuristic, pheromone)
-        self.ants = [Ant(self.edges, alpha, beta, self.n_nodes) for i in range(self.size)]
+        if (edges != None):
+            self.edges = edges
+        else:
+            self.edges = [[None for j in range(self.n_nodes)] for i in range(self.n_nodes)]
+            for x in range(self.n_nodes):
+                for y in range(self.n_nodes):
+                    heuristic = math.sqrt(
+                        math.pow(self.nodes[x].x-self.nodes[y].x, 2) +
+                        math.pow(self.nodes[x].y-self.nodes[y].y, 2)
+                    )
+                    coef1 = random.randint(10, 1000)/10000.0
+                    coef2 = random.randint(-500, 500)/1000.0
+                    coef3 = random.randint(500, 500)/1000.0
+                    coef4 = random.randint(-500, 500)/1000.0
+                    self.edges[x][y] = self.edges[y][x] = Edge(x, y, heuristic, pheromone,coef1,coef2,coef3,coef4)
+        self.ants = [Ant(self.edges, alpha, beta, self.n_nodes,time) for i in range(self.size)]
 
         # global Best route
         self.best_tour = []
