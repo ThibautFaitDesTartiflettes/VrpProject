@@ -1,0 +1,11 @@
+calcul realized at  : 2022-06-29 09:48:45.092096
+done in             : 17.982564449310303s
+iteration           : 1000
+iteration time      : 0.017982564449310304
+n_points            : 10
+
+
+
+Best distance : 5754.104244613859
+
+path : 

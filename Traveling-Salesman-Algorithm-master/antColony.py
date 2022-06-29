@@ -34,7 +34,7 @@ class AntColony(object):
 
 
         # self.ants = [Ant(self.edges, alpha, beta, self.n_nodes) for i in range(self.size)]
-        self.ants = [Ant(self.graph, alpha, beta, self.n_vertex) for i in range(self.size)]
+        self.ants = [Ant(self.graph.Edges, alpha, beta, self.n_vertex) for i in range(self.size)]
 
         # global Best route
         self.best_tour = []
