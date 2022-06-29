@@ -24,7 +24,6 @@ started = False
 rightMouseClicked = False
 GenerateToggle = False
 reset = False
-
 PauseButton.state = pause
 ResetButton.state = reset
 RandomButton.state = GenerateToggle
@@ -116,10 +115,26 @@ while run:
     PauseButton.Render(manager.screen, rightMouseClicked)
     ResetButton.Render(manager.screen, rightMouseClicked)
     RandomButton.Render(manager.screen, rightMouseClicked)
-    slider.Render(manager.screen)
+
+#Activ Constarinte
+    if (IsConstraintBtn.state):
+        IsConstraintBtn.color = (252,192,0)
+        IsConstraintBtn.text = "OFF"
+        manager.ResetAntColony(False)
+    else:
+        IsConstraintBtn.color = (75,87,95)
+        IsConstraintBtn.text = "ON"
+        slider.Render(manager.screen)
+        manager.ResetAntColony(True)
+
+    IsConstraintBtn.Render(manager.screen, rightMouseClicked)
+    
+
+
 
     pause = PauseButton.state
     reset = ResetButton.state
+    btnStateConstraint = IsConstraintBtn.state
 
 #RESET Button
     if reset == True:
@@ -128,7 +143,7 @@ while run:
         fileWrited = False
         timeIteration = []
         manager.ResetGraph()
-
+    
 
     GenerateToggle = RandomButton.state
     if GenerateToggle == True:

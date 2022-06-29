@@ -10,9 +10,9 @@ from ant import *
 offset          = 100
 width, height   = 1920, 1080
 populationSize  = 300
-n = 15
+n = 10
 colony_size = 10
-iterations = 250
+iterations = 1000
 pygame.font.init()
 
 class Manager(object):
@@ -44,24 +44,26 @@ class Manager(object):
     Order           = [i for i in range(n_points)]
     counter         = 0
 
-    def __init__(self, Points = [Point(randint(offset, width-offset), randint(offset, height-offset)) for i in range(n_points)]):
+    def __init__(self, Points = [Point(randint(offset, width-offset), randint(offset, height-offset)) for i in range(n_points)],isTimeConstraint = False):
         self.Points          = Points
         self.recordDistance  = SumDistance(self.Points)
         self.OptimalRoutes   = self.Points.copy()
         self.currentList     = self.Points.copy()
+        self.isTimeConstraint = isTimeConstraint
 
         # --- Ant Colony ---
         self.antColony = AntColony(size=colony_size, max_iterations = iterations,
-                         nodes=self.Points.copy(), alpha=1, beta=3, rho=0.1, pheromone=1, phe_deposit_weight=1)
+                         nodes=self.Points.copy(), alpha=1, beta=3, rho=0.1, pheromone=1, phe_deposit_weight=1,isTimeConstraint=isTimeConstraint)
 
     def ResetGenetic(self):
         self.genetic = Genetic([sample(list(range(n)), n) for i in range(populationSize)], populationSize)
 
-    def ResetAntColony(self):
+    def ResetAntColony(self,isTimeConstraint):
+        self.isTimeConstraint = isTimeConstraint
         self.recordDistance  = SumDistance(self.Points)
         edges = self.antColony.edges
         self.antColony = AntColony( size=colony_size, max_iterations = iterations,
-                         nodes=self.Points.copy(), alpha=1, beta=3, rho=0.1, pheromone=1, phe_deposit_weight=1,edges=edges)
+                         nodes=self.Points.copy(), alpha=1, beta=3, rho=0.1, pheromone=1, phe_deposit_weight=1,edges=edges,isTimeConstraint=isTimeConstraint)
     
     def SetFps(self):
         if (n > 100):
@@ -117,7 +119,7 @@ class Manager(object):
 
     def RandomPoints(self):
         self.Points = [Point(randint(offset/2, width-5*offset), randint(offset, height-offset)) for i in range(self.n_points)]
-        self.ResetAntColony()
+        self.ResetAntColony(self.isTimeConstraint)
         self.recordDistance  = SumDistance(self.Points)
         self.OptimalRoutes   = self.Points.copy()
         self.currentList     = self.Points.copy()
@@ -157,7 +159,8 @@ class Manager(object):
         self.screen.blit(textSurface_ale, (20, 75))
         self.screen.blit(textSurface_count, (20,100))
         self.screen.blit(textSurface_iterTime, (20, 125))
-        self.screen.blit(textSurface_time, (width-270,50))
+        if (self.isTimeConstraint):
+            self.screen.blit(textSurface_time, (width-270,50))
 
         if (n>100):
             textSurface_result = textFont2.render(" --> ".join([str(i) for i in self.OptimalRoutes]), False, textColor)
@@ -196,7 +199,7 @@ class Manager(object):
         #self.__init__(temp)
         self.OptimalRoutes = self.Points.copy()
         self.recordDistance = SumDistance(self.Points)
-        self.ResetAntColony()
+        self.ResetAntColony(self.isTimeConstraint)
         self.ResetGenetic()
         self.timePassed = 0
         self.counter = 0

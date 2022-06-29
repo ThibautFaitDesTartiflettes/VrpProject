@@ -28,7 +28,7 @@ class Edge:
         
 
 class Ant:
-    def __init__(self, edges, alpha, beta, n_nodes,time):
+    def __init__(self, edges, alpha, beta, n_nodes,time,isTimeConstraint = False):
         """
         alpha -> parameter used to control the importance of the pheromone trail
         beta  -> parameter used to control the heuristic information during selection
@@ -40,6 +40,7 @@ class Ant:
         self.n_nodes = n_nodes
         self.distance = 0.0
         self.time = time
+        self.isTimeConstraint = isTimeConstraint
 
     def NodeSelection(self):
         """
@@ -57,19 +58,25 @@ class Ant:
         states = [node for node in range(self.n_nodes) if node not in self.tour]
         heuristic_value = 0
         for new_state in states:
-            # heuristic_value += self.edges[self.tour[-1]][new_state].heuristic
-            heuristic_value += self.edges[self.tour[-1]][new_state].CalcDist(self.time)
+            if (self.isTimeConstraint):
+                heuristic_value += self.edges[self.tour[-1]][new_state].CalcDist(self.time)
+            else:
+                heuristic_value += self.edges[self.tour[-1]][new_state].heuristic
         for new_state in states:
             A = math.pow(self.edges[self.tour[-1]][new_state].pheromone, self.alpha)
-            B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].CalcDist(self.time)), self.beta)
-            # B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].heuristic), self.beta)
+            if (self.isTimeConstraint):
+                B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].CalcDist(self.time)), self.beta)
+            else:
+                B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].heuristic), self.beta)
             roulette_wheel += A * B
         random_value = random.uniform(0, roulette_wheel)
         wheel_position = 0
         for new_state in states:
             A = math.pow(self.edges[self.tour[-1]][new_state].pheromone, self.alpha)
-            # B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].heuristic), self.beta)
-            B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].CalcDist(self.time)), self.beta)
+            if (self.isTimeConstraint):
+                B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].CalcDist(self.time)), self.beta)
+            else:
+                B = math.pow((heuristic_value/self.edges[self.tour[-1]][new_state].heuristic), self.beta)
             wheel_position += A * B
             if wheel_position >= random_value:
                 return new_state
